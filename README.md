@@ -37,9 +37,39 @@
 * Install Git with **sudo apt-get install git**.
 * Create new directory with **cd /var/www** and **sudo mkdir catalog** and **sudo chown -R grader:grader catalog**.
 * Clone repo with **git clone https://github.com/nmartinez23/item-catalog.git catalog**.
+* Install Flask and Virtual Environment with **sudo apt-get install python-pip** and **sudo pip install virtualenv** and **sudo virtualenv venv** and **source venv/bin/activate**. Change permission to **sudo chmod -R 777 venv**. Then run **sudo pip install Flask** and **sudo pip install httplib2 requests oauth2client sqlalchemy psycopg2 sqlalchemy_utils**.
+* Change client with `sudo nano __init__.py` and save the following in the file:
+```
+CLIENT_ID = json.loads(
+    open('/var/www/catalog/catalog/client_secrets.json', 'r').read())['web']['client_id']
+```
+* Configure the virtual host with **sudo nano /etc/apache2/sites-available/catalog.conf** and save the following in the file:
+```
+<VirtualHost *:80>
+    ServerName 52-201-102-170
+    ServerAlias ec2-52-201-102-170.us-east-1a.compute.amazonaws.com
+    WSGIDaemonProcess catalog python-path=/var/www/catalog:/var/www/catalog/venv/lib/python2.7/site-packages
+    WSGIProcessGroup catalog
+    WSGIScriptAlias / /var/www/catalog/catalog.wsgi
+    <Directory /var/www/catalog/catalog/>
+        Order allow,deny
+        Allow from all
+    </Directory>
+    Alias /static /var/www/catalog/catalog/static
+    <Directory /var/www/catalog/catalog/static/>
+        Order allow,deny
+        Allow from all
+    </Directory>
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    LogLevel warn
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+```
+* Start the virtual host with **sudo a2ensite catalog** and **sudo service apache2 restart**
 * Create wsgi file with **sudo nano catalog.wsgi** and save the following in the file:
 
 ```
+#!/usr/bin/python
 activate_this = '/var/www/catalog/catalog/database_setup.py'
 execfile(activate_this, dict(__file__=activate_this))
 
@@ -51,9 +81,9 @@ sys.path.insert(0, "/var/www/catalog/")
 from catalog import app as application
 application.secret_key = 'super_secret_key'
 ```
-* Install Flask and Virtual Environment with **sudo apt-get install python-pip** and **sudo pip install virtualenv** and **sudo virtualenv venv** and **source venv/bin/activate**. Change permission to **sudo chmod -R 777 venv**. Then run **sudo pip install Flask** and **sudo pip install httplib2 requests oauth2client sqlalchemy psycopg2 sqlalchemy_utils**.
-* Change client with `sudo nano __init__.py` and save the following in the file:
+* Restart Apache with **sudo service apache2 restart**.
+* Sudo nano into your __init__.py and database_setup.py and add the following to each file:
 ```
-CLIENT_ID = json.loads(
-    open('/var/www/catalog/catalog/client_secrets.json', 'r').read())['web']['client_id']
+engine = create_engine('postgresql://catalog:catalog@localhost/catalog')
 ```
+* Restart with `sudo service apache2 restart` and `sudo python __init__.py`.
