@@ -51,3 +51,9 @@ sys.path.insert(0, "/var/www/catalog/")
 from catalog import app as application
 application.secret_key = 'super_secret_key'
 ```
+* Install Flask and Virtual Environment with **sudo apt-get install python-pip** and **sudo pip install virtualenv** and **sudo virtualenv venv** and **source venv/bin/activate**. Change permission to **sudo chmod -R 777 venv**. Then run **sudo pip install Flask** and **sudo pip install httplib2 requests oauth2client sqlalchemy psycopg2 sqlalchemy_utils**.
+* Change client with `sudo nano __init__.py` and save the following in the file:
+```
+CLIENT_ID = json.loads(
+    open('/var/www/catalog/catalog/client_secrets.json', 'r').read())['web']['client_id']
+```
