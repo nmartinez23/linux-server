@@ -90,6 +90,8 @@ engine = create_engine('postgresql://catalog:catalog@localhost/catalog')
 * Restart with `sudo service apache2 restart` and `sudo python __init__.py`.
 * Site should load at http://52.201.102.170/
 * http://ec2-52-201-102-170.compute-1.amazonaws.com/
+* SSH Port 2200
+* HTTP web server Port 80
 
 ## Resources
 * https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps
