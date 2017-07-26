@@ -66,11 +66,12 @@ CLIENT_ID = json.loads(
 </VirtualHost>
 ```
 * Start the virtual host with **sudo a2ensite catalog** and **sudo service apache2 restart**
+* **cd ..** to move back to the main catalog directory
 * Create wsgi file with **sudo nano catalog.wsgi** and save the following in the file:
 
 ```
 #!/usr/bin/python
-activate_this = '/var/www/catalog/catalog/database_setup.py'
+activate_this = '/var/www/catalog/catalog/venv/bin/activate_this.py'
 execfile(activate_this, dict(__file__=activate_this))
 
 import sys
@@ -87,3 +88,12 @@ application.secret_key = 'super_secret_key'
 engine = create_engine('postgresql://catalog:catalog@localhost/catalog')
 ```
 * Restart with `sudo service apache2 restart` and `sudo python __init__.py`.
+* Site should load at http://52.201.102.170/
+* http://ec2-52-201-102-170.compute-1.amazonaws.com/
+
+## Resources
+* https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps
+* AWS Lightsail
+* PostgreSQL
+* Apache2
+* Git
