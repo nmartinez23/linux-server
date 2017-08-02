@@ -8,7 +8,7 @@
 * Git
 * Python
 
-The following steps detail how to connect to an AWS Lightsail virtual private server Ubuntu Linux. 
+The following steps detail how to connect to an AWS Lightsail virtual private server with Ubuntu Linux. 
 
 * Start a Ubuntu Linux server instance with [Amazon Lightsail](https://amazonlightsail.com/).
 * SSH into the server by clicking the "Connect" button in the Lightsail dashboard.
