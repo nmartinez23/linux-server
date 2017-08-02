@@ -1,6 +1,16 @@
 # Linux Server Configuration
 
-* Start a Ubuntu Linux server instance with Amazon Lightsail.
+## Resources
+* https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps
+* AWS Lightsail
+* PostgreSQL
+* Apache2
+* Git
+* Python
+
+The following steps detail how to connect to an AWS Lightsail virtual private server Ubuntu Linux. 
+
+* Start a Ubuntu Linux server instance with [Amazon Lightsail](https://amazonlightsail.com/).
 * SSH into the server by clicking the "Connect" button in the Lightsail dashboard.
 * A Lightsail terminal will pop up. Update all currently installed packages with the command "sudo apt-get update"
 * Configure Lightsail firewall and ports to allow incoming connections for SSH (port 2200), HTTP (port 80), and NTP (port 123). Use the following commands: **'sudo ufw status', 'sudo ufw default deny incoming', 'sudo ufw default allow outgoing', 'sudo ufw allow ssh', 'sudo ufw allow 2200/tcp', 'sudo ufw allow www', 'sudo ufw deny 22', 'sudo ufw enable'**.
@@ -92,10 +102,3 @@ engine = create_engine('postgresql://catalog:catalog@localhost/catalog')
 * http://ec2-52-201-102-170.compute-1.amazonaws.com/
 * SSH Port 2200
 * HTTP web server Port 80
-
-## Resources
-* https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps
-* AWS Lightsail
-* PostgreSQL
-* Apache2
-* Git
